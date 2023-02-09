@@ -1,0 +1,22 @@
+#====================database==========================
+#url database
+spring.datasource.url=
+#username database
+spring.datasource.username=
+#password database
+spring.datasource.password=
+#driver class name for database
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+#====================hibernate==========================
+#Hibernate
+#set to update, there are several value like none, create, etc.
+spring.jpa.hibernate.ddl-auto=update
+#show sql logging
+spring.jpa.show-sql=true
+#formatting sql
+spring.jpa.properties.hibernate.format_sql=true
+# Because detection is disabled you have to set correct dialect by hand.
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
