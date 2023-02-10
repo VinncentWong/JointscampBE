@@ -9,10 +9,7 @@ import jointscamp.be.exception.UserNotFoundException;
 import jointscamp.be.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -35,5 +32,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> loginUser(@RequestBody @Valid LoginUserDto dto) throws UserNotFoundException, UserNotAuthenticatedException {
         return this.service.loginUser(dto);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Response> getUser(@PathVariable("id") Long id) throws UserNotFoundException {
+        return this.service.getUserById(id);
     }
 }
