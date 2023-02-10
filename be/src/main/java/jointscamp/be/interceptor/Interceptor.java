@@ -3,6 +3,7 @@ package jointscamp.be.interceptor;
 import jointscamp.be.exception.UserExistException;
 import jointscamp.be.exception.UserNotAuthenticatedException;
 import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.produk.ProdukNotFoundException;
 import jointscamp.be.util.Response;
 import jointscamp.be.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +40,22 @@ public class Interceptor {
         return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getMessage(), null);
     }
 
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<Response> handle(IOException ex){
+        return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getMessage(), null);
+    }
+
+    @ExceptionHandler(ProdukNotFoundException.class)
+    public ResponseEntity<Response> handle(ProdukNotFoundException ex){
+        return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getMessage(), null);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Response> handle(MethodArgumentNotValidException ex){
         List<String> messages = new ArrayList<>();
         ex.getAllErrors().forEach((e) -> {
             messages.add(e.getDefaultMessage());
         });
-        return this.util.sendResponse(HttpStatus.UNAUTHORIZED, false, messages, null);
+        return this.util.sendResponse(HttpStatus.BAD_REQUEST, false, messages, null);
     }
 }
