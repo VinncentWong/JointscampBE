@@ -1,10 +1,9 @@
 package jointscamp.be.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.*;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,6 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Setter
 @Getter
+@DynamicUpdate
+@DynamicInsert
 public class Produk {
 
     @Id
@@ -26,13 +27,24 @@ public class Produk {
 
     private String detailProduk;
 
-    private String gambarProduk;
+    @Lob
+    private byte[] gambarProduk;
 
     private String lokasiProduk;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private User user;
 }
