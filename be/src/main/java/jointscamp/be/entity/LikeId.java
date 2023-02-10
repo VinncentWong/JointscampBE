@@ -1,12 +1,16 @@
 package jointscamp.be.entity;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
-class LikeId implements Serializable {
+@Setter
+@Getter
+public class LikeId implements Serializable {
     private Long userId;
     private UUID produkId;
 
