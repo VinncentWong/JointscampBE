@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import jointscamp.be.util.Extractable;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "users")
 @Builder
@@ -14,6 +17,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Setter
 @Getter
+@DynamicUpdate
+@DynamicInsert
 public class User implements Extractable {
 
     @Id
@@ -26,7 +31,8 @@ public class User implements Extractable {
 
     private String password;
 
-    private String photoProfile;
+    @Lob
+    private byte[] photoProfile;
 
     private String whatsappContact;
 
@@ -41,4 +47,7 @@ public class User implements Extractable {
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Produk> produks;
 }
