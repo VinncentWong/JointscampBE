@@ -40,14 +40,14 @@ public class UserService {
         User user = dto.transformIntoUser();
         var users = this.userRepo.getUserByEmail(dto.email());
         if(users.isPresent()){
-            throw new UserExistException("email sudah terdaftar di database");
+            throw new UserExistException("email already exist in database");
         }
         var result = this.userRepo.save(user);
         return this.responseUtil.sendResponse(HttpStatus.CREATED, true, "success create user", result);
     }
 
     public ResponseEntity<Map<String, Object>> loginUser(LoginUserDto dto) throws UserNotFoundException, UserNotAuthenticatedException {
-        var user = this.userRepo.getUserByEmail(dto.email()).orElseThrow(() -> new UserNotFoundException("data user tidak ditemukan"));
+        var user = this.userRepo.getUserByEmail(dto.email()).orElseThrow(() -> new UserNotFoundException("user not found"));
         if(BcryptUtil.bcrypt().matches(dto.password(), user.getPassword())){
             String tokenJwt = this.jwt.generateToken(user);
             Map<String, Object> response = new HashMap<>();
@@ -57,6 +57,16 @@ public class UserService {
             response.put("jwt", tokenJwt);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }
-        throw new UserNotAuthenticatedException("user tidak terautentikasi");
+        throw new UserNotAuthenticatedException("user not authenticated");
+    }
+
+    public ResponseEntity<Response> getUserById(Long id) throws UserNotFoundException {
+        var user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("user not found"));
+        return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get user", user);
+    }
+
+    public ResponseEntity<Response> getAllUser(){
+        Iterable<User> users = this.userRepo.findAll();
+        return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get users", users);
     }
 }
