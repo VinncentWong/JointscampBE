@@ -1,8 +1,8 @@
 package jointscamp.be.interceptor;
 
-import jointscamp.be.exception.UserExistException;
-import jointscamp.be.exception.UserNotAuthenticatedException;
-import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.user.UserExistException;
+import jointscamp.be.exception.user.UserNotAuthenticatedException;
+import jointscamp.be.exception.user.UserNotFoundException;
 import jointscamp.be.exception.produk.ProdukNotFoundException;
 import jointscamp.be.util.Response;
 import jointscamp.be.util.ResponseUtil;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.security.sasl.AuthenticationException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +41,14 @@ public class Interceptor {
         return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getMessage(), null);
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<Response> handle(IOException ex){
-        return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getMessage(), null);
-    }
-
     @ExceptionHandler(ProdukNotFoundException.class)
     public ResponseEntity<Response> handle(ProdukNotFoundException ex){
         return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getMessage(), null);
+    }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<Response> handle(IOException ex){
+        return this.util.sendResponse(HttpStatus.INTERNAL_SERVER_ERROR, false, ex.getLocalizedMessage(), null);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
