@@ -1,14 +1,11 @@
 package jointscamp.be.dto.user;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jointscamp.be.entity.User;
 import jointscamp.be.util.BcryptUtil;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public record RegisterUserDto(
         @NotNull(message = "email should not null")
