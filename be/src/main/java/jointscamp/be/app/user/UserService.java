@@ -1,11 +1,14 @@
 package jointscamp.be.app.user;
 
+import jakarta.transaction.Transactional;
 import jointscamp.be.dto.user.LoginUserDto;
 import jointscamp.be.dto.user.RegisterUserDto;
+import jointscamp.be.dto.user.UpdateUserDto;
 import jointscamp.be.entity.User;
-import jointscamp.be.exception.UserExistException;
-import jointscamp.be.exception.UserNotAuthenticatedException;
-import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.user.UserExistException;
+import jointscamp.be.exception.user.UserNotAuthenticatedException;
+import jointscamp.be.exception.user.UserNotFoundException;
+import jointscamp.be.mapper.user.UserMapper;
 import jointscamp.be.util.BcryptUtil;
 import jointscamp.be.util.JwtUtil;
 import jointscamp.be.util.Response;
@@ -19,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Transactional()
 public class UserService {
 
     @Autowired
@@ -68,5 +72,11 @@ public class UserService {
     public ResponseEntity<Response> getAllUser(){
         Iterable<User> users = this.userRepo.findAll();
         return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get users", users);
+    }
+
+    public ResponseEntity<Response> updateUser(UpdateUserDto dto, Long userId) throws UserNotFoundException {
+        User user = this.userRepo.findById(userId).orElseThrow(() -> new UserNotFoundException("user data doesn't exist"));
+        UserMapper.INSTANCE.updateUserFromUpdateDto(dto, user);
+        return this.responseUtil.sendResponse(HttpStatus.OK, true, "success update user data", null);
     }
 }
