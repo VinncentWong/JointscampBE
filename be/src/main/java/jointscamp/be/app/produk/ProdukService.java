@@ -6,10 +6,12 @@ import jointscamp.be.dto.produk.CreateProdukDto;
 import jointscamp.be.dto.produk.UpdateProdukDto;
 import jointscamp.be.entity.Produk;
 import jointscamp.be.entity.User;
-import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.user.UserNotFoundException;
 import jointscamp.be.exception.produk.ProdukNotFoundException;
+import jointscamp.be.mapper.produk.ProdukMapper;
 import jointscamp.be.util.Response;
 import jointscamp.be.util.ResponseUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
+@Slf4j
 public class ProdukService {
 
     private final ProdukRepository produkRepository;
@@ -53,11 +56,8 @@ public class ProdukService {
 
     public ResponseEntity<Response> updateProduk(UUID produkId, UpdateProdukDto dto, MultipartFile file) throws ProdukNotFoundException, IOException {
         Produk produk = this.produkRepository.findById(produkId).orElseThrow(() -> new ProdukNotFoundException("product doesn't exist in database"));
-        dto.updateProduk(produk);
-        if(file != null){
-            produk.setGambarProduk(file.getBytes());
-        }
-        this.produkRepository.saveAndFlush(produk);
+        var result = ProdukMapper.INSTANCE.updateProduk(dto, produk);
+        this.produkRepository.save(result);
         return this.responseUtil.sendResponse(HttpStatus.OK, true, "success update produk", null);
     }
 

@@ -3,7 +3,7 @@ package jointscamp.be.app.produk;
 import jakarta.validation.Valid;
 import jointscamp.be.dto.produk.CreateProdukDto;
 import jointscamp.be.dto.produk.UpdateProdukDto;
-import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.user.UserNotFoundException;
 import jointscamp.be.exception.produk.ProdukNotFoundException;
 import jointscamp.be.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
