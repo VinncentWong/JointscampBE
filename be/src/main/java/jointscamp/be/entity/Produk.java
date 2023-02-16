@@ -1,8 +1,10 @@
 package jointscamp.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import org.hibernate.annotations.*;
 
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @Getter
 @DynamicUpdate
 @DynamicInsert
+@ToString
 public class Produk {
 
     @Id
@@ -43,7 +46,7 @@ public class Produk {
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JsonIgnore
     @ToString.Exclude
     private User user;
