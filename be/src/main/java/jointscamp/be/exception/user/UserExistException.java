@@ -1,4 +1,4 @@
-package jointscamp.be.exception;
+package jointscamp.be.exception.user;
 
 public class UserExistException extends Exception{
     public UserExistException() {
