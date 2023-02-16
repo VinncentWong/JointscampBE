@@ -16,10 +16,4 @@ public record UpdateProdukDto(
 
         @Length(min = 4, message = "product location length should be >= 4")
         String produkLocation
-) {
-        public void updateProduk(Produk produk) throws IOException {
-                produk.setDetailProduk(this.produkDetail);
-                produk.setLokasiProduk(this.produkLocation);
-                produk.setNamaProduk(this.produkName);
-        }
-}
+) {}
