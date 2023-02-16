@@ -5,7 +5,7 @@ import jointscamp.be.app.user.UserRepository;
 import jointscamp.be.entity.Like;
 import jointscamp.be.entity.LikeId;
 import jointscamp.be.entity.User;
-import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.user.UserNotFoundException;
 import jointscamp.be.util.Response;
 import jointscamp.be.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
