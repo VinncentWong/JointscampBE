@@ -7,11 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 
 @Entity(name = "likes")
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
+@ToString
 public class Like {
 
     @EmbeddedId
@@ -20,5 +16,4 @@ public class Like {
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date createdAt;
-
 }
