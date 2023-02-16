@@ -1,13 +1,12 @@
 package jointscamp.be.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import jointscamp.be.util.Extractable;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +47,6 @@ public class User implements Extractable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Produk> produks;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Produk> produks = new ArrayList<>();
 }
