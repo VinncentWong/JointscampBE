@@ -1,4 +1,4 @@
-package jointscamp.be.security.authentication.util;
+package jointscamp.be.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
