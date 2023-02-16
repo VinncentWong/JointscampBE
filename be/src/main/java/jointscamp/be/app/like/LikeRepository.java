@@ -1,6 +1,7 @@
 package jointscamp.be.app.like;
 
 import jointscamp.be.entity.Like;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,7 @@ public interface LikeRepository extends CrudRepository<Like, Long> {
     )
     public Long getProdukLike(UUID idProduk);
 
+    @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM produk WHERE produk_id = ?1 AND user_id = ?2")
     public void deleteProdukLike(UUID idProduk, Long idUser);
 
