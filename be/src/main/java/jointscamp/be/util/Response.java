@@ -1,8 +1,12 @@
-package jointscamp.be.security.authentication.util;
+package jointscamp.be.util;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Response {
 
     private boolean success;
