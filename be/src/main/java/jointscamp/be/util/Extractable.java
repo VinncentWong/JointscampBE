@@ -1,4 +1,4 @@
-package jointscamp.be.util;
+package jointscamp.be.security.authentication.util;
 
 import java.util.Date;
 

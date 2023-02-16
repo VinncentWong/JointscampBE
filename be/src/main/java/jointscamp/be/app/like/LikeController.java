@@ -1,6 +1,6 @@
 package jointscamp.be.app.like;
 
-import jointscamp.be.exception.UserNotFoundException;
+import jointscamp.be.exception.user.UserNotFoundException;
 import jointscamp.be.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
