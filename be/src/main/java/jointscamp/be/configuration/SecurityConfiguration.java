@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfiguration {
@@ -17,11 +21,21 @@ public class SecurityConfiguration {
         return http
                 .csrf().disable()
                 .httpBasic().disable()
+                .cors((c) -> {
+                    CorsConfigurationSource source = (r) -> {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedMethods(List.of("*"));
+                        config.setAllowedHeaders(List.of("*"));
+                        config.setAllowedOrigins(List.of("*"));
+                        return config;
+                    };
+                    c.configurationSource(source);
+                })
                 .exceptionHandling()
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/produk/**").authenticated()
-                .requestMatchers("/user/create", "/user/login", "/user/get/{id}").permitAll()
+                .requestMatchers("/user/create", "/user/login", "/user/get/{id}", "/user/gets").permitAll()
                 .requestMatchers("/user/**").authenticated()
                 .requestMatchers("/like/**").authenticated()
                 .and()
