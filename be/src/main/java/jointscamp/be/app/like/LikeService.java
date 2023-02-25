@@ -1,9 +1,11 @@
 package jointscamp.be.app.like;
 
 import jakarta.transaction.Transactional;
+import jointscamp.be.app.produk.ProdukRepository;
 import jointscamp.be.app.user.UserRepository;
 import jointscamp.be.entity.Like;
 import jointscamp.be.entity.LikeId;
+import jointscamp.be.entity.Produk;
 import jointscamp.be.entity.User;
 import jointscamp.be.exception.user.UserNotFoundException;
 import jointscamp.be.util.Response;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,13 +28,16 @@ public class LikeService {
 
     private final UserRepository userRepository;
 
+    private final ProdukRepository produkRepository;
+
     private final ResponseUtil responseUtil;
 
     @Autowired
-    public LikeService(LikeRepository repository, ResponseUtil responseUtil, UserRepository userRepository){
+    public LikeService(LikeRepository repository, ResponseUtil responseUtil, UserRepository userRepository, ProdukRepository produkRepository){
         this.repository = repository;
         this.responseUtil = responseUtil;
         this.userRepository = userRepository;
+        this.produkRepository = produkRepository;
     }
 
     public ResponseEntity<Response> addLike(Long userId, UUID produkId){
@@ -70,5 +76,15 @@ public class LikeService {
             throw new UserNotFoundException(exception.getMessage());
         }
         return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get list users like", users);
+    }
+
+    public ResponseEntity<Response> getProductLikes(Long idUser){
+        List<String> ids = this.repository.getListProductLike(idUser);
+        List<Produk> produks = new ArrayList<>();
+        ids.forEach((id) -> {
+            Optional<Produk> produk = this.produkRepository.findById(UUID.fromString(id));
+            produk.ifPresent(produks::add);
+        });
+        return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get list like", produks);
     }
 }
