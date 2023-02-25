@@ -38,4 +38,9 @@ public class UserController {
     public ResponseEntity<Response> getUser(@PathVariable("id") Long id) throws UserNotFoundException {
         return this.service.getUserById(id);
     }
+
+    @GetMapping("/gets")
+    public ResponseEntity<Response> getUsers(){
+        return this.service.getAllUser();
+    }
 }
