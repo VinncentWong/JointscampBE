@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 
 @Entity(name = "likes")
+@Setter
+@Getter
 @ToString
 public class Like {
 

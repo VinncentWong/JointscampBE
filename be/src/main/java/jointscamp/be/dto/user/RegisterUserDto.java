@@ -26,6 +26,7 @@ public record RegisterUserDto(
     public User transformIntoUser(){
         return User
                 .builder()
+                .username(this.username)
                 .email(this.email)
                 .password(BcryptUtil.bcrypt().encode(this.password))
                 .build();
