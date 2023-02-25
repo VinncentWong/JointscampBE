@@ -1,14 +1,31 @@
 version: '3.7'
 services:
+  jointscamp_api:
+    build: .
+    container_name: "jointscamp_api"
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    depends_on:
+      - jointscamp_db
+    networks:
+      - jointscamp_networks
   jointscamp_db:
     container_name: jointscamp_db
     image: postgres:latest
     ports:
       - "5000:5432"
+    expose:
+      - "5432"
     environment:
       - PGDATA=/var/lib/postgresql/data/jointscamp
       - POSTGRES_PASSWORD=jointscamp
     volumes:
       - postgres_jointscamp_volume:/var/lib/postgresql/data/jointscamp
+    networks:
+      - jointscamp_networks
 volumes:
   postgres_jointscamp_volume:
+networks:
+  jointscamp_networks:
+    driver: bridge
