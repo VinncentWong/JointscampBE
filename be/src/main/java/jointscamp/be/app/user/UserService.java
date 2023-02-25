@@ -12,6 +12,7 @@ import jointscamp.be.util.BcryptUtil;
 import jointscamp.be.util.JwtUtil;
 import jointscamp.be.util.Response;
 import jointscamp.be.util.ResponseUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 @Service
 @Transactional
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -52,6 +54,7 @@ public class UserService {
 
     public ResponseEntity<Map<String, Object>> loginUser(LoginUserDto dto) throws UserNotFoundException, UserNotAuthenticatedException {
         var user = this.userRepo.getUserByEmail(dto.email()).orElseThrow(() -> new UserNotFoundException("user not found"));
+        log.info("password matches = " + BcryptUtil.bcrypt().matches(dto.password(), user.getPassword()));
         if(BcryptUtil.bcrypt().matches(dto.password(), user.getPassword())){
             String tokenJwt = this.jwt.generateToken(user);
             Map<String, Object> response = new HashMap<>();
