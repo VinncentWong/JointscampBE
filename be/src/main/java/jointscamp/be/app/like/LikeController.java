@@ -52,4 +52,9 @@ public class LikeController {
         UUID uuid = UUID.fromString(produkId);
         return this.service.getListUserWhoLike(uuid);
     }
+
+    @GetMapping("/getlikes/{userId}")
+    public ResponseEntity<Response> getLikes(@PathVariable("userId") Long id){
+        return this.service.getProductLikes(id);
+    }
 }
