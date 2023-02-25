@@ -13,14 +13,21 @@ import java.util.UUID;
 public interface LikeRepository extends CrudRepository<Like, Long> {
 
     @Query(nativeQuery = true, value =
-            "SELECT COUNT(user_id) FROM likes GROUP BY produk_id HAVING produk_id=?1"
+            "SELECT " +
+                    "count(user_id) FROM " +
+                    "jointscamp.public.likes " +
+                    "l GROUP BY produk_id " +
+                    "HAVING produk_id = ?1"
     )
     public Long getProdukLike(UUID idProduk);
 
     @Modifying
-    @Query(nativeQuery = true, value = "DELETE FROM produk WHERE produk_id = ?1 AND user_id = ?2")
+    @Query(nativeQuery = true, value = "DELETE FROM likes WHERE produk_id = ?1 AND user_id = ?2")
     public void deleteProdukLike(UUID idProduk, Long idUser);
 
     @Query(nativeQuery = true, value = "SELECT user_id FROM likes WHERE produk_id = ?1")
     public List<Long> getUserLike(UUID produkId);
+
+    @Query(nativeQuery = true, value = "SELECT produk_id FROM likes WHERE user_id = ?1")
+    public List<String> getListProductLike(Long id);
 }
