@@ -1,6 +1,5 @@
 package jointscamp.be.app.like;
 
-import jakarta.transaction.Transactional;
 import jointscamp.be.app.produk.ProdukRepository;
 import jointscamp.be.app.user.UserRepository;
 import jointscamp.be.entity.Like;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
