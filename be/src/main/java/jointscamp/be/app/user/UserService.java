@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -74,8 +75,8 @@ public class UserService {
     }
 
     public ResponseEntity<Response> getAllUser(){
-        Iterable<User> users = this.userRepo.findAll();
-        users.iterator().next();
+        List<User> users = this.userRepo.findAll();
+        users.get(0).getProduks().get(0);
         return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get users", users);
     }
 
