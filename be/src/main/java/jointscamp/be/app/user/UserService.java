@@ -70,13 +70,13 @@ public class UserService {
 
     public ResponseEntity<Response> getUserById(Long id) throws UserNotFoundException {
         var user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("user not found"));
-        user.getProduks().get(0);
+        user.getProduks().size();
         return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get user", user);
     }
 
     public ResponseEntity<Response> getAllUser(){
         List<User> users = this.userRepo.findAll();
-        users.get(0).getProduks().get(0);
+        users.get(0).getProduks().size();
         return this.responseUtil.sendResponse(HttpStatus.OK, true, "success get users", users);
     }
 
